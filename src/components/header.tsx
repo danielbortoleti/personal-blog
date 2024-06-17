@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
     {
@@ -13,16 +16,16 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const pathname = usePathname();
   return (
-    <header className="flex justify-between items-center py-2 px-4 border-b">
-   
+    <header className="flex justify-between items-center py-4 px-7 border-b">
       <div className="flex items-center space-x-4">
         <Link href="/">
           <div className="relative w-[80px] h-[80px]">
             <Image
               src="/logo.png"
               alt="Logo"
-              layout="fill"
+              fill
               objectFit="contain"
             />
           </div>
@@ -33,15 +36,16 @@ export default function Header() {
       </div>
 
       <nav>
-        <ul className="flex gap-x-5 text-base">
+        <ul className="flex gap-x-5 text-[14px]">
           {navLinks.map((link) => (
-            <li key={link.href} className="text-gray-600 hover:text-gray-800">
-              <Link href={link.href}>{link.label}</Link>
+            <li key={link.href}>
+              <Link className={`${
+                pathname === link.href ? "text-zinc-900" : "text-zinc-400"
+              }`} href={link.href}>{link.label}</Link>
             </li>
           ))}
         </ul>
       </nav>
-
     </header>
   );
 }
